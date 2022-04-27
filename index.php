@@ -2,6 +2,15 @@
 error_reporting(-1);
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/funcs.php';
+
+session_start();
+
+if (isset($_POST['register'])) {
+    registration();
+    header("Location: index.php");
+    die;
+}
 
 ?>
 <!doctype html>
@@ -23,56 +32,67 @@ require_once __DIR__ . '/db.php';
     <div class="container">
         <div class="row">
             <!-- Alerts -->
+            <?php if (!empty($_SESSION['success'])): ?>
             <div class="alert alert-info" role="alert">
-                A simple info alert—check it out!
+               <?php 
+               echo $_SESSION['success'];
+               unset($_SESSION['success']);
+               ?> 
             </div>
+            <?php endif; ?>
+            <?php if (!empty($_SESSION['errors'])) : ?>
             <div class="alert alert-danger" role="alert">
-                A simple danger alert—check it out!
+               <?php
+               echo $_SESSION['errors'];
+               unset($_SESSION['errors']);
+               ?> 
             </div>
+            <?php endif; ?>
             <!-- End Alerts -->
 
             <div class="col-4 mx-auto ">
-
+                <?php if (empty($_SESSION['user']['name'])): ?>
                 <!-- Form for Registration -->
                 <h2>Registration</h2>
-                <form>
+                <form action="index.php" method="post">
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="name" placeholder="Name">
+                        <input type="text" class="form-control" name="login" id="loginReg" placeholder="Name">
                     </div>
                     <div class="mb-3">
-                        <input type="password" class="form-control" id="password" placeholder="Password">
+                        <input type="password" class="form-control" name="password" id="passReg" placeholder="Password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Registration</button>
+                    <button type="submit" name="register" class="btn btn-primary">Register</button>
                 </form>
                 <!-- End Form for Registration -->
 
                 <hr>
                 <!-- Form for Authorization -->
                 <h2>Authorization</h2>
-                <form>
+                <form action="index.php" method="post">
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="name" placeholder="Name">
+                        <input type="text" class="form-control" name="login" id="loginAuth" placeholder="Name">
                     </div>
                     <div class="mb-3">
-                        <input type="password" class="form-control" id="password">
+                        <input type="password" class="form-control" name="password" id="passAuth" placeholder="Password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Authorization</button>
+                    <button type="submit" name="auth" class="btn btn-primary">Auth</button>
                 </form>
                 <!-- End Form for Authorization -->
 
+                <?php else: ?>
                 <!-- Welcome message and Logout link -->
                 <div class="mt-2 mb-2">Welcome, User! <a href="">Log out</a></div>
                 <!-- End Welcome message -->
 
                 <!-- Form for Message -->
-                <form>
+                <form action="index.php" method="post">
                     <div class="mb-3">
                         <textarea class="form-control" id="message" rows="3" placeholder="Message"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Send</button>
+                    <button type="submit" name="add" class="btn btn-primary">Send</button>
                 </form>
                 <!-- End Message -->
-
+                <?php endif; ?>
                 <hr>
                 <!-- Show Messages -->
                 <div class="card mb-3">

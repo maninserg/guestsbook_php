@@ -15,4 +15,4 @@ $options = [
 
 $pdo = new PDO($dsn, $user, $pass, $options);
 
-var_dump($pdo);
+// var_dump($pdo);
