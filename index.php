@@ -1,5 +1,8 @@
 <?php
 error_reporting(-1);
+
+require_once __DIR__ . '/db.php';
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -72,7 +75,7 @@ error_reporting(-1);
 
                 <hr>
                 <!-- Show Messages -->
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Author: User</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of
