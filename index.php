@@ -13,10 +13,17 @@ if (isset($_POST['register'])) {
 }
 
 if (isset($_POST['auth'])) {
-    debug($_POST);
     login();
-    //header("Location: index.php");
-    //die;
+    header("Location: index.php");
+    die;
+}
+
+if (isset($_GET['do']) && $_GET['do'] == 'exit') {
+    if(!empty($_SESSION['user'])){
+        unset($_SESSION['user']);
+    }
+    header("Location: index.php");
+    die;
 }
 
 ?>
@@ -88,7 +95,7 @@ if (isset($_POST['auth'])) {
 
                 <?php else: ?>
                 <!-- Welcome message and Logout link -->
-                <div class="mt-2 mb-2">Welcome, <?= htmlspecialchars($_SESSION['user']['name'])?>! <a href="">Log out</a></div>
+                <div class="mt-2 mb-2">Welcome, <?= htmlspecialchars($_SESSION['user']['name'])?>! <a href="?do=exit">Log out</a></div>
                 <!-- End Welcome message -->
 
                 <!-- Form for Message -->
