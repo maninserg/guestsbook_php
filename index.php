@@ -18,6 +18,12 @@ if (isset($_POST['auth'])) {
     die;
 }
 
+if (isset($_POST['add'])) {
+    save_message();
+    header("Location: index.php");
+    die;
+}
+
 if (isset($_GET['do']) && $_GET['do'] == 'exit') {
     if(!empty($_SESSION['user'])){
         unset($_SESSION['user']);
@@ -101,7 +107,7 @@ if (isset($_GET['do']) && $_GET['do'] == 'exit') {
                 <!-- Form for Message -->
                 <form action="index.php" method="post">
                     <div class="mb-3">
-                        <textarea class="form-control" id="message" rows="3" placeholder="Message"></textarea>
+                        <textarea class="form-control" id="message" rows="3" name="message" placeholder="Message"></textarea>
                     </div>
                     <button type="submit" name="add" class="btn btn-primary">Send</button>
                 </form>

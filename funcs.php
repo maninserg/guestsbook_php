@@ -65,3 +65,30 @@ function login(): bool
 
     }
 }
+
+function save_message(): bool
+{
+    global $pdo;
+    $message = !empty($_POST['message']) ? trim($_POST['message']) : '';
+
+    if (!isset($_SESSION['user']['name'])) {
+        $_SESSION['errors'] = "User is not autorizired";
+        return false;
+       
+    }
+
+    if (empty($message)) {
+        $_SESSION['errors'] = "Message can't be empty";
+        return false;
+
+    }
+
+    $res = $pdo->prepare("INSERT INTO messages(name, message) VALUES (?, ?)");
+    if ($res->execute([$_SESSION['user']['name'], $message])) {
+        $_SESSION['success'] = 'Message has been added';
+        return true;
+    } else {
+        $_SESSION['errors'] = 'Message has not been added';
+        return false;
+    }
+}
