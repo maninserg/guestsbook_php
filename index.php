@@ -32,6 +32,8 @@ if (isset($_GET['do']) && $_GET['do'] == 'exit') {
     die;
 }
 
+$messages = get_messages();
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -113,17 +115,21 @@ if (isset($_GET['do']) && $_GET['do'] == 'exit') {
                 </form>
                 <!-- End Message -->
                 <?php endif; ?>
+
+                <?php if (!empty($messages)): ?>
                 <hr>
+                <?php foreach($messages as $message): ?>
                 <!-- Show Messages -->
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">Author: User</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <h6 class="card-subtitle mb-2 text-muted">Date: 01.01.2022</h6>
+                        <h5 class="card-title">Author: <?= htmlspecialchars($message['name']) ?></h5>
+                        <p class="card-text"><?= nl2br(htmlspecialchars($message['message'])) ?></p>
+                        <h6 class="card-subtitle mb-2 text-muted">Date: <?= $message['created_at'] ?></h6>
                     </div>
                 </div>
                 <!-- End Show Messages -->
+                <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </div>

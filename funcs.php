@@ -92,3 +92,10 @@ function save_message(): bool
         return false;
     }
 }
+
+function get_messages(): array
+{
+    global $pdo;
+    $res = $pdo->query("SELECT * FROM messages");
+    return $res->fetchAll();
+}
